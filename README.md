@@ -115,11 +115,13 @@ Para generar un APK, ejecutar el siguiente comando en la terminal:
 El archivo APK se generará en la carpeta build/app/outputs/apk/release/.
 
 
-## Si Todo Fall: descargar el APK desde Github
+## Si Todo Falla: descargar el APK desde Github
 Si no puedes ejecutar la app, puedes descargar el APK desde GitHub Releases.
 
 📌 Enlace de descarga:
+
 ➡ [📥 Descargar última versión del APK](https://github.com/Thony091/movie_db_app/releases/tag/apk)
+
 
 Instrucciones:
 
@@ -139,12 +141,3 @@ Instálalo en tu dispositivo Android.
 
 - Reinicio de listas de peliculas en el home:
   - Implementar la limpieza de la lista del provider al salir de la pagina home.
-
-
-## Change App Icon
-
-- flutter pub run flutter_launcher_icons
-
-## Change Splash Screen
-
-- flutter pub run flutter_native_splash:create

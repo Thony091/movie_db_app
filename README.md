@@ -1,77 +1,96 @@
-# Movie DB App - Application Overview
-This project is create with fflutter sdk version 3.27.1.
+# Movie DB App - Descripción de la Aplicación
 
-To avoid compilation problems you must have Java 17 installed
+Este proyecto fue creado con **Flutter SDK versión 3.27.1**.
 
-The Movie DB App is a Flutter-based mobile application designed for movie enthusiasts. It allows users to explore, search, and manage their favorite movies with an intuitive and visually appealing interface. The app integrates with an external movie database API to fetch real-time movie data.
+Para evitar problemas de compilación, debes tener **Java 17 instalado**.
 
-🔹 Core Features
+The Movie DB App es una aplicación móvil desarrollada en **Flutter**, diseñada para los amantes del cine. Permite a los usuarios explorar, buscar y gestionar sus películas favoritas con una interfaz intuitiva y visualmente atractiva. La aplicación se integra con una API externa de base de datos de películas para obtener información en tiempo real.
 
-1️⃣ Display of Popular & Top-Rated Movies
-The app features two primary movie lists:
-Popular Movies: Displays the movies that are currently trending among users.
-Top-Rated Movies: Shows the highest-rated movies based on audience and critic reviews.
-Users can switch between these lists using category buttons, which also visually update when selected.
-The lists are paginated, allowing users to load more movies dynamically by clicking a button.
+---
 
-2️⃣ Movie Favorites System
-Users can save their favorite movies by tapping a bookmark icon.
-Saved movies are stored in a "Watch List", which can be accessed from the main menu.
-The state of favorite movies is maintained persistently using local storage.
+## 🔹 Funcionalidades Principales
 
-3️⃣ Movie Search with Autocomplete Suggestions
-The app includes a search bar where users can look for specific movies by title.
-As users type, real-time suggestions appear based on existing movie data.
-If a movie is found:
-It autocompletes the search bar when selected.
-Clicking the search button navigates the user to the selected movie's detail page.
-If no movie matches the search, the search button is disabled.
+### 1️⃣ Visualización de Películas Populares y Mejor Valoradas
+La aplicación cuenta con dos listas principales de películas:
 
-4️⃣ Movie Detail View
-Clicking on any movie opens a detailed movie page, which includes:
-High-resolution poster and background image.
-Movie title and a brief synopsis (overview).
-Genres displayed as category chips.
-Release date, rating, popularity, and review count.
-Tabs for "About Movie" and "Reviews".
-The ability to add/remove the movie from favorites.
-A back button to return to the previous screen.
+- **Películas Populares**: Muestra las películas que están en tendencia entre los usuarios.
+- **Películas Mejor Valoradas**: Muestra las películas con las calificaciones más altas basadas en reseñas de la audiencia y críticos.
 
-5️⃣ Smooth UI & Interactive Elements
-Uses PageView for smooth transitions between "Popular" and "Top Rated" movie lists.
-Animations and effects:
-"Load More" button displays a downward arrow animation when clicked.
-Search button shows press effects to indicate user interaction.
-The app maintains smooth state management using Riverpod.
+📌 Los usuarios pueden alternar entre estas listas mediante **botones de categoría**, que también cambian visualmente al ser seleccionados.  
+📌 Las listas son **paginadas**, lo que permite cargar más películas de forma dinámica al hacer clic en un botón.
 
-🔹 How It Works
+---
 
-1️⃣ User launches the app → Displays "Popular" movies by default.
+### 2️⃣ Sistema de Favoritos
+✔️ Los usuarios pueden guardar sus películas favoritas tocando un **icono de marcador**.  
+✔️ Las películas guardadas se almacenan en una lista llamada **"Watch List"**.  
+✔️ Esta lista es accesible desde el menú principal.  
+✔️ El estado de las películas favoritas se mantiene **persistente** usando almacenamiento local.  
 
-2️⃣ User navigates between Popular & Top Rated lists → Movies update dynamically.
+---
 
-3️⃣ User searches for a movie → Suggestions appear, selection updates the input field.
+### 3️⃣ Búsqueda de Películas con Autocompletado
+La aplicación incluye una barra de búsqueda donde los usuarios pueden buscar películas por título.  
 
-4️⃣ User selects a movie → Opens the movie detail screen with information.
+🔹 Mientras el usuario escribe, aparecen **sugerencias en tiempo real** basadas en los datos existentes.  
 
-5️⃣ User saves a movie as a favorite → Added to the "Watch List".
+✅ **Si se encuentra la película**:  
+- Se **autocompleta** el campo de búsqueda al seleccionarla.  
+- Al hacer clic en el **botón de búsqueda**, el usuario es redirigido a la página de detalles de la película.  
 
-6️⃣ User opens the Watch List → Displays all saved favorite movies.
+❌ **Si no hay coincidencias**, el botón de búsqueda se deshabilita.  
 
-7️⃣ User loads more movies → New movies dynamically append to the list.
+---
 
+### 4️⃣ Vista de Detalles de la Película
+Al hacer clic en una película, se abre una página con detalles completos, que incluyen:
 
-🔹 Technologies Used
+- 📌 **Póster en alta resolución** y **imagen de fondo**.  
+- 📌 **Título de la película** y una breve **sinopsis**.  
+- 📌 **Géneros** representados como etiquetas.  
+- 📌 **Fecha de estreno, calificación, popularidad y número de reseñas**.  
+- 📌 **Pestañas** para "Acerca de la Película" y "Reseñas".  
+- 📌 **Opción de agregar o eliminar la película de favoritos**.  
+- 📌 **Botón de retroceso** para volver a la pantalla anterior.  
 
-Flutter (Dart) for UI development.
-Riverpod for state management.
-GoRouter for navigation and deep linking.
-API Integration to fetch real-time movie data.
-Local storage for saving favorite movies persistently.
+---
 
-🔹 Summary
+### 5️⃣ UI Suave e Interactiva
+✔️ **Transiciones fluidas** entre las listas de películas populares y mejor valoradas con `PageView`.  
+✔️ **Animaciones y efectos**:  
+   - 📌 El botón **"Cargar Más"** muestra una **animación de flecha descendente** al hacer clic.  
+   - 📌 El botón de búsqueda tiene **efectos de pulsación** para indicar interacción del usuario.  
+✔️ **Manejo de estado eficiente con Riverpod** para garantizar una experiencia fluida.  
 
-The Movie DB App is an interactive movie browsing application where users can explore Popular & Top Rated movies, perform intelligent search with autocomplete, save movies to favorites, and view detailed movie information in an elegant and responsive UI. 
+---
+
+## 🔹 Cómo Funciona
+
+1️⃣ **El usuario inicia la aplicación** → Se muestran las películas **Populares** por defecto.  
+2️⃣ **El usuario cambia entre las listas de Populares y Mejor Valoradas** → Las películas se actualizan dinámicamente.  
+3️⃣ **El usuario busca una película** → Aparecen sugerencias en tiempo real.  
+4️⃣ **El usuario selecciona una película** → Se abre la pantalla de detalles con información completa.  
+5️⃣ **El usuario guarda una película como favorita** → Se añade a la **Watch List**.  
+6️⃣ **El usuario abre la Watch List** → Se muestran todas las películas favoritas guardadas.  
+7️⃣ **El usuario carga más películas** → Se añaden dinámicamente a la lista.  
+
+---
+
+## 🔹 Tecnologías Utilizadas
+
+✅ **Flutter (Dart)** → Para el desarrollo de la interfaz de usuario.  
+✅ **Riverpod** → Para la gestión del estado.  
+✅ **GoRouter** → Para la navegación y deep linking.  
+✅ **Integración con API** → Para obtener datos de películas en tiempo real.  
+✅ **Almacenamiento local** → Para guardar películas favoritas de forma persistente.  
+
+---
+
+## 🔹 Resumen
+
+📌 The Movie DB App es una aplicación interactiva para explorar películas **populares y mejor valoradas**, realizar **búsquedas inteligentes con autocompletado**, guardar películas como favoritas y ver información detallada con una **interfaz elegante y responsiva**. 🎬📱  
+
+---
 
 ## Guia para ejecución del proyecto Android
 

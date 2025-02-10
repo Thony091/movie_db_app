@@ -76,7 +76,7 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomAppBarHome( controller: controller ),
+                    _CustomAppBarHome( controller: controller ),
       
                     // Movies List
                     Visibility(
@@ -217,9 +217,8 @@ class MovieListView extends ConsumerWidget {
   }
 }
 
-class CustomAppBarHome extends ConsumerWidget {
-  const CustomAppBarHome({
-    super.key,
+class _CustomAppBarHome extends ConsumerWidget {
+  const _CustomAppBarHome({
     required this.controller,
   });
 

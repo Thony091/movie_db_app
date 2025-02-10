@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -112,7 +113,7 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
         // 📌 Lista de sugerencias de películas
         if (movieSuggestions.isNotEmpty)
           ConstrainedBox(
-            constraints: BoxConstraints( maxHeight: MediaQuery.of(context).size.height * 0.5),
+            constraints: BoxConstraints( maxHeight: MediaQuery.of(context).size.height * 0.45),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.1),
@@ -123,10 +124,74 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
                 itemCount: movieSuggestions.length,
                 itemBuilder: (context, index) {
                   final movie = movieSuggestions[index];
-                  return ListTile(
-                    title: Text(movie.title, style: const TextStyle(color: Colors.white)),
-                    onTap: () => _selectMovie(movie), // ✅ Selecciona la película al hacer clic
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.white),
+                  return GestureDetector(
+                    onTap: () => _selectMovie(movie), 
+                    child: FadeIn(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), 
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: FadeInImage(
+                                  placeholder: const AssetImage('assets/loaders/bottle-loader.gif'),
+                                  image: movie.posterPath.isEmpty
+                                      ? const AssetImage('assets/images/no-image.jpg') as ImageProvider
+                                      : NetworkImage(movie.posterPath),
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                  imageErrorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/no-image.jpg',
+                                      width: 50,
+                                      height: 50,
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.55,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      movie.title, 
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: movie.title.length > 30
+                                          ? 13
+                                          : 16,
+                                        fontWeight: FontWeight.bold
+                                      )
+                                    ),
+                                    // const SizedBox(height: 3),
+                                  ( movie.overview.length > 100 )
+                                    ? Text( '${movie.overview.substring(0,100)}...', 
+                                        style: const TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: 13,
+                                        ) 
+                                      )
+                                    : Text( movie.overview.isEmpty
+                                              ? 'No overview available' 
+                                              : movie.overview,
+                                        style: const TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: 13,
+                                        ) 
+                                      ),
+                                ]
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),

@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.movie_db_app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:label="movie_db_app"
         android:name="${applicationName}"

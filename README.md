@@ -160,3 +160,4 @@ Instálalo en tu dispositivo Android.
 
 - Reinicio de listas de peliculas en el home:
   - Implementar la limpieza de la lista del provider al salir de la pagina home.
+  - Destruir el widget para que se reinicie los estados de pagina al volver.

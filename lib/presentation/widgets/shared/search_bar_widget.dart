@@ -31,7 +31,6 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
       return;
     }
 
-    // Simula una búsqueda en la API
     final movies = await ref.read(movieRepositoryProvider).searchMovies(query);
 
     // Actualiza el estado con las sugerencias encontradas
@@ -68,6 +67,9 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
                 controller: widget.controller,
                 onChanged: _searchMovies,
                 decoration: InputDecoration(
+                  hintStyle: const TextStyle(
+                    color: Colors.white
+                  ),
                   hintText: "Search Here ...",
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.15),
@@ -109,19 +111,25 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
         const SizedBox(height: 10),
         // 📌 Lista de sugerencias de películas
         if (movieSuggestions.isNotEmpty)
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              children: movieSuggestions.map((movie) {
-                return ListTile(
-                  title: Text(movie.title, style: const TextStyle(color: Colors.white)),
-                  onTap: () => _selectMovie(movie), // ✅ Selecciona la película al hacer clic
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.white),
-                );
-              }).toList(),
+          ConstrainedBox(
+            constraints: BoxConstraints( maxHeight: MediaQuery.of(context).size.height * 0.5),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListView.builder(
+                shrinkWrap: true, // ✅ Evita que la lista crezca indefinidamente
+                itemCount: movieSuggestions.length,
+                itemBuilder: (context, index) {
+                  final movie = movieSuggestions[index];
+                  return ListTile(
+                    title: Text(movie.title, style: const TextStyle(color: Colors.white)),
+                    onTap: () => _selectMovie(movie), // ✅ Selecciona la película al hacer clic
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.white),
+                  );
+                },
+              ),
             ),
           ),
       ],

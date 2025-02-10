@@ -177,7 +177,7 @@ class FavoritePageState extends ConsumerState<FavoritePage> {
               ),
               // Load & back Buttons
               Positioned(
-                bottom: 0,
+                bottom: 5,
                 left: 0,
                 right: 10,
                 child: Row(
@@ -242,20 +242,25 @@ class CustomFavoriteAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox( height: 50 ),
         Text(
           'Movie DB App', 
-          style: Theme.of(context).textTheme.headlineLarge
+          style: Theme.of(context).textTheme.headlineLarge,
+          textAlign: TextAlign.left,
         ),
         SizedBox( height: 30 ),
         Text(
           'Your Watch List',
-          style: appTextTheme.titleMedium 
+          style: appTextTheme.titleMedium, 
+          textAlign: TextAlign.left,
         ),
       ],
+      )
     );
   }
 }

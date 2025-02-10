@@ -3,11 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/domain.dart';
 import '../../presentation.dart';
 
+
+final isFavoriteProvider = FutureProvider.family.autoDispose((ref, int movieId) {
+  final localStorageRepository = ref.watch(localStorageRepositoryProvider);
+  return localStorageRepository.isMovieFavorite(movieId);
+});
+
 final favoriteMoviesProvider = StateNotifierProvider<StorageMoviesNotifier,Map<int,Movie>>((ref) {
   final localStorageRepository = ref.watch( localStorageRepositoryProvider );
   return StorageMoviesNotifier(localStorageRepository: localStorageRepository);
 });
-
 
 class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
   

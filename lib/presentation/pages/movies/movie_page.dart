@@ -51,7 +51,7 @@ class MovieScreenState extends ConsumerState<MoviePage> {
               children: [
                 Image.network(
                   loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child!;
+                    if (loadingProgress == null) return child;
                     return Image.asset(
                       'assets/loaders/bottle-loader.gif',
                       fit: BoxFit.cover,
@@ -400,9 +400,3 @@ class CustomTabView extends StatelessWidget {
     );
   }
 }
-
-
-final isFavoriteProvider = FutureProvider.family.autoDispose((ref, int movieId) {
-  final localStorageRepository = ref.watch(localStorageRepositoryProvider);
-  return localStorageRepository.isMovieFavorite(movieId);
-});

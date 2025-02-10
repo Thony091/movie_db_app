@@ -4,6 +4,7 @@ This project is create with sdk version 3.27.1.
 The Movie DB App is a Flutter-based mobile application designed for movie enthusiasts. It allows users to explore, search, and manage their favorite movies with an intuitive and visually appealing interface. The app integrates with an external movie database API to fetch real-time movie data.
 
 🔹 Core Features
+
 1️⃣ Display of Popular & Top-Rated Movies
 The app features two primary movie lists:
 Popular Movies: Displays the movies that are currently trending among users.
@@ -42,21 +43,32 @@ Search button shows press effects to indicate user interaction.
 The app maintains smooth state management using Riverpod.
 
 🔹 How It Works
+
 1️⃣ User launches the app → Displays "Popular" movies by default.
+
 2️⃣ User navigates between Popular & Top Rated lists → Movies update dynamically.
+
 3️⃣ User searches for a movie → Suggestions appear, selection updates the input field.
+
 4️⃣ User selects a movie → Opens the movie detail screen with information.
+
 5️⃣ User saves a movie as a favorite → Added to the "Watch List".
+
 6️⃣ User opens the Watch List → Displays all saved favorite movies.
+
 7️⃣ User loads more movies → New movies dynamically append to the list.
 
+
 🔹 Technologies Used
+
 Flutter (Dart) for UI development.
 Riverpod for state management.
 GoRouter for navigation and deep linking.
 API Integration to fetch real-time movie data.
 Local storage for saving favorite movies persistently.
+
 🔹 Summary
+
 The Movie DB App is an interactive movie browsing application where users can explore Popular & Top Rated movies, perform intelligent search with autocomplete, save movies to favorites, and view detailed movie information in an elegant and responsive UI. 
 
 ## Change App Icon

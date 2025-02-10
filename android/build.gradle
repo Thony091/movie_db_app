@@ -1,6 +1,17 @@
+buildscript {
+    repositories {
+        google()  // ✅ Agrega esta línea
+        mavenCentral() // ✅ Agrega esta línea
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20"
+    }
+}
+
 allprojects {
     repositories {
-        google()
+        google()  // ✅ Asegúrate de que estos repositorios están presentes
         mavenCentral()
     }
 }
@@ -9,6 +20,19 @@ rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                if (namespace == null) {
+                    namespace project.group
+                }
+            }
+        }
+    }
+}
+
 subprojects {
     project.evaluationDependsOn(":app")
 }

@@ -56,6 +56,7 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
   Widget build(BuildContext context) {
     super.build(context);
 
+    final movieSuggestions = ref.watch(movieSuggestionsProvider) ?? [];
     final pageIndexNotifier = ref.watch(pageIndexHomeProvider.notifier);
     final pageController = pageIndexNotifier.pageController;
 
@@ -64,6 +65,7 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
 
     return Scaffold(
       backgroundColor: appColorTheme.secondary,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [
@@ -75,47 +77,50 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomAppBarHome( controller: controller ),
-
+      
                     // Movies List
-                    Expanded(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          PageView(
-                            controller: pageController,
-                            onPageChanged: (index) {
-                              pageIndexNotifier.changePage(index);
-                            },
-                            children: [
-                              MovieListView( moviesProvider: topRatedMoviesProvider ),
-                              MovieListView( moviesProvider: popularMoviesProvider ),
-                            ],
-                          ),
-
-                          //Animated Arrow 
-                          Positioned(
-                            bottom: 5, 
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: showArrowAnimation ? 1.0 : 0.0,
-                              child: const Icon(
-                                Icons.keyboard_arrow_down,
-                                shadows: [ 
-                                  Shadow( 
-                                    color: Colors.green, 
-                                    blurRadius: 20,
-                                    offset: Offset(0, -5),
-                                  ) 
-                                ],
-                                size: 65,
-                                color: Color(0xFF61C19C),
+                    Visibility(
+                      visible: movieSuggestions.isEmpty,
+                      child: Expanded(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            PageView(
+                              controller: pageController,
+                              onPageChanged: (index) {
+                                pageIndexNotifier.changePage(index);
+                              },
+                              children: [
+                                MovieListView( moviesProvider: topRatedMoviesProvider ),
+                                MovieListView( moviesProvider: popularMoviesProvider ),
+                              ],
+                            ),
+                              
+                            //Animated Arrow 
+                            Positioned(
+                              bottom: 5, 
+                              child: AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: showArrowAnimation ? 1.0 : 0.0,
+                                child: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  shadows: [ 
+                                    Shadow( 
+                                      color: Colors.green, 
+                                      blurRadius: 20,
+                                      offset: Offset(0, -5),
+                                    ) 
+                                  ],
+                                  size: 65,
+                                  color: Color(0xFF61C19C),
+                                ),
                               ),
                             ),
-                          ),
-                        ]
+                          ]
+                        ),
                       ),
                     ),
-
+      
                     SizedBox( height: 60, )
                   ],
                 ),
@@ -127,7 +132,7 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
         
             // 🔽 Botón "Load More" y "Watch List"
             Positioned(
-              bottom: 0,
+              bottom: 5,
               left: 0,
               right: 10,
               child: Padding(
@@ -135,37 +140,40 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
+      
                     LoadMoreButton(
                       pageController: pageController,
                       showArrowCallback: _showArrow,
                     ),
-
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF61C19C),
-                        foregroundColor: Colors.black, 
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10), 
-                        minimumSize: const Size(150, 50),
-                      ),
-                      onPressed: () => context.go('/favorite-page'),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Watch List",
-                            style: appTextTheme.labelLarge,
+      
+                    SizedBox(
+                      height: 45,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF61C19C),
+                          foregroundColor: Colors.black, 
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          const SizedBox(width: 8),
-                          Icon(
-                            Icons.bookmark, 
-                            size: 30, 
-                            color: appColorTheme.secondary
-                          ), 
-                        ],
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10), 
+                          minimumSize: const Size(150, 50),
+                        ),
+                        onPressed: () => context.go('/favorite-page'),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Watch List",
+                              style: appTextTheme.labelLarge,
+                            ),
+                            const SizedBox(width: 8),
+                            Icon(
+                              Icons.bookmark, 
+                              size: 30, 
+                              color: appColorTheme.secondary
+                            ), 
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -209,7 +217,7 @@ class MovieListView extends ConsumerWidget {
   }
 }
 
-class CustomAppBarHome extends StatelessWidget {
+class CustomAppBarHome extends ConsumerWidget {
   const CustomAppBarHome({
     super.key,
     required this.controller,
@@ -218,7 +226,10 @@ class CustomAppBarHome extends StatelessWidget {
   final TextEditingController controller;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    
+    final movieSuggestions = ref.watch(movieSuggestionsProvider) ?? [];
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,23 +260,29 @@ class CustomAppBarHome extends StatelessWidget {
         
         SizedBox( height: 25 ),
         
-        Text(
-          'Categories',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          )
+        Visibility(
+          visible: movieSuggestions.isEmpty,
+          child: Text(
+            'Categories',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            )
+          ),
         ),
         
         const SizedBox(height: 20),
         
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            _CategoryButton(label: "Top Rated", index: 0,),
-            _CategoryButton(label: "Popular", index: 1),
-          ],
+        Visibility(
+          visible: movieSuggestions.isEmpty,
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _CategoryButton(label: "Top Rated", index: 0,),
+              _CategoryButton(label: "Popular", index: 1),
+            ],
+          ),
         ),
     
         

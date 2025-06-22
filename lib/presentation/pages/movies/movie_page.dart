@@ -70,8 +70,8 @@ class MovieScreenState extends ConsumerState<MoviePage> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Colors.black.withOpacity(0.2),
-                        Colors.black.withOpacity(0.8),
+                        Colors.black.withValues(alpha: 0.2),
+                        Colors.black.withValues(alpha: 0.8),
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -84,7 +84,7 @@ class MovieScreenState extends ConsumerState<MoviePage> {
 
           // 📌 Contenedor de contenido con imagen y título
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.27, // 🔥 Ajuste para que se solape con la imagen
+            top: MediaQuery.of(context).size.height * 0.27,
             left: 0,
             right: 0,
             child: Container(
@@ -140,21 +140,30 @@ class MovieScreenState extends ConsumerState<MoviePage> {
                   const SizedBox(height: 30),
 
                   // 🎭 Genres
-                  Wrap(
-                    spacing: 10,
-                    children: movie.genreIds.map((genre) {
-                      return Chip(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        label: Text(genre),
-                        backgroundColor: appColorTheme.primary.withOpacity(0.7),
-                        labelStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                        ),
-                      );
-                    }).toList(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Wrap(
+                        spacing: 10,
+                        children: movie.genreIds.map((genre) {
+                          return Chip(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              side: BorderSide(
+                                color: Colors.transparent, 
+                              ),
+                            ),
+                            label: Text(genre),
+                            backgroundColor: appColorTheme.primary.withValues(alpha: 0.75),
+                            labelStyle: const TextStyle(
+                              color: Colors.white,  
+                              fontSize: 13,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
                   ),
 
                   const SizedBox(height: 10),
@@ -183,7 +192,7 @@ class MovieScreenState extends ConsumerState<MoviePage> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: () => context.go('/home'),
+                  onPressed: () => context.pop(),
                   icon: const Icon(Icons.arrow_back, color: Colors.white, size: 25),
                   label: const Text("Back"),
                 ),
@@ -196,7 +205,7 @@ class MovieScreenState extends ConsumerState<MoviePage> {
                       loading: () => Colors.transparent,
                       data: (isFavorite) => isFavorite
                         ? const Color(0xFF61C19C)
-                        : Colors.white.withOpacity(0.15),
+                        : Colors.white.withValues(alpha: 0.15),
                       error: (_, __) => Colors.transparent,
                     ),
                     onPressed: () async { 
@@ -245,9 +254,9 @@ class CustomTabView extends StatelessWidget {
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(
                 width: 3.0, 
-                color: Colors.white, // 🔥 Color del indicador
+                color: Colors.white, 
               ),
-              insets: EdgeInsets.symmetric(horizontal: 0), // 🔥 Ajuste de espaciado
+              insets: EdgeInsets.symmetric(horizontal: 0), 
             ),
             tabs: const [
               Tab(text: "About Movie"),

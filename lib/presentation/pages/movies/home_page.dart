@@ -141,9 +141,12 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
       
-                    LoadMoreButton(
-                      pageController: pageController,
-                      showArrowCallback: _showArrow,
+                    Visibility(
+                      // visible: movieSuggestions.length,
+                      child: LoadMoreButton(
+                        pageController: pageController,
+                        showArrowCallback: _showArrow,
+                      ),
                     ),
       
                     SizedBox(
@@ -319,7 +322,7 @@ class _CategoryButton extends ConsumerWidget {
         decoration: BoxDecoration(
           color: isSelected 
             ? const Color(0xFF61C19C) 
-            : const Color.fromARGB(255, 86, 89, 96).withOpacity(0.8),
+            : const Color.fromARGB(255, 86, 89, 96).withValues(alpha: 0.8),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(

@@ -73,7 +73,7 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
                   ),
                   hintText: "Search Here ...",
                   filled: true,
-                  fillColor: Colors.white.withOpacity(0.15),
+                  fillColor: Colors.white.withValues(alpha: 0.15),
                   contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -90,8 +90,8 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isButtonDisabled
-                      ? Colors.white.withOpacity(0.1) // 🔴 Desactivado si no hay película seleccionada
-                      : Colors.white.withOpacity(0.15),
+                      ? Colors.white.withValues(alpha: 0.1) // 🔴 Desactivado si no hay película seleccionada
+                      : Colors.white.withValues(alpha: 0.15),
                   padding: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -116,7 +116,7 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
             constraints: BoxConstraints( maxHeight: MediaQuery.of(context).size.height * 0.45),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListView.builder(
@@ -132,7 +132,7 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.16,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: FadeInImage(
@@ -140,7 +140,7 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
                                   image: movie.posterPath.isEmpty
                                       ? const AssetImage('assets/images/no-image.jpg') as ImageProvider
                                       : NetworkImage(movie.posterPath),
-                                  height: 120,
+                                  height: 100,
                                   fit: BoxFit.cover,
                                   imageErrorBuilder: (context, error, stackTrace) {
                                     return Image.asset(
@@ -155,21 +155,20 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
                             ),
                             const SizedBox(width: 10),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.55,
+                              width: MediaQuery.of(context).size.width * 0.6,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                      movie.title, 
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: movie.title.length > 30
-                                          ? 13
-                                          : 16,
-                                        fontWeight: FontWeight.bold
-                                      )
-                                    ),
-                                    // const SizedBox(height: 3),
+                                    movie.title, 
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: movie.title.length > 30
+                                        ? 13
+                                        : 16,
+                                      fontWeight: FontWeight.bold
+                                    )
+                                  ),
                                   ( movie.overview.length > 100 )
                                     ? Text( '${movie.overview.substring(0,100)}...', 
                                         style: const TextStyle(
@@ -178,8 +177,8 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
                                         ) 
                                       )
                                     : Text( movie.overview.isEmpty
-                                              ? 'No overview available' 
-                                              : movie.overview,
+                                          ? 'No overview available' 
+                                          : movie.overview,
                                         style: const TextStyle(
                                           color: Colors.white70,
                                           fontSize: 13,

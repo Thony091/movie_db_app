@@ -46,13 +46,16 @@ class LoadMoreButtonState extends ConsumerState<LoadMoreButton> {
         setState(() => isPressed = false); 
       },
       borderRadius: BorderRadius.circular(13), 
-      splashColor: Colors.white.withOpacity(0.3), 
-      highlightColor: Colors.white.withOpacity(0.1),
+      splashColor: Colors.white.withValues( alpha: 0.3 ), 
+      highlightColor: Colors.white.withValues( alpha: 0.1 ),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isPressed ? Colors.white.withOpacity(0.2) : Colors.transparent,
+          color: isPressed 
+            // ignore: dead_code
+            ? Colors.white.withValues( alpha: 0.2 ) 
+            : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(

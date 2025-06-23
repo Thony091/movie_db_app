@@ -98,7 +98,7 @@ class FavoritePageState extends ConsumerState<FavoritePage> {
                       SizedBox(width: 10),
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 86, 89, 96).withOpacity(0.8),
+                          backgroundColor: const Color.fromARGB(255, 86, 89, 96).withValues( alpha: 0.8 ),
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -194,7 +194,7 @@ class FavoritePageState extends ConsumerState<FavoritePage> {
                     SizedBox(width: 10),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 86, 89, 96).withOpacity(0.8),
+                        backgroundColor: const Color.fromARGB(255, 86, 89, 96).withValues( alpha: 0.8 ),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -202,7 +202,7 @@ class FavoritePageState extends ConsumerState<FavoritePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13),
                       ),
                       onPressed: () {
-                        context.go('/home');
+                        context.pop();
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -281,35 +281,29 @@ class LoadMoreFavoriteButton extends ConsumerStatefulWidget {
 
 class LoadMoreFavoriteButtonState extends ConsumerState<LoadMoreFavoriteButton> {
 
-
-  Future<void> _loadMore( Future<void> favoriteMoviesNextPage ) async {
-    widget.showArrowCallback();
-    await favoriteMoviesNextPage;
-  }
-
   @override
   Widget build(BuildContext context) {
 
-    final favoriMoviesNextPage = ref.read( favoriteMoviesProvider.notifier ).loadNextPage();
     final appTextTheme = Theme.of(context).textTheme;
     bool isPressed = false;
 
     return InkWell(
       onTap: () async {
         setState(() => isPressed = true); 
-        await _loadMore( favoriMoviesNextPage);
+        widget.showArrowCallback();
+        await ref.read( favoriteMoviesProvider.notifier ).loadNextPage();
         await Future.delayed(const Duration(milliseconds: 200));
         setState(() => isPressed = false); 
       },
       borderRadius: BorderRadius.circular(13), 
-      splashColor: Colors.white.withOpacity(0.3), 
-      highlightColor: Colors.white.withOpacity(0.1),
+      splashColor: Colors.white.withValues( alpha: 0.3 ), 
+      highlightColor: Colors.white.withValues( alpha: 0.1 ),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           // ignore: dead_code
-          color: isPressed ? Colors.white.withOpacity(0.2) : Colors.transparent,
+          color: isPressed ? Colors.white.withValues( alpha: 0.2 ) : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(

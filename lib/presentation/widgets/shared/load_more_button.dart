@@ -19,29 +19,28 @@ class LoadMoreButton extends ConsumerStatefulWidget {
 
 class LoadMoreButtonState extends ConsumerState<LoadMoreButton> {
 
-
-  Future<void> _loadMore( Future<void> topRatedNextPage, Future<void> popularNextPage ) async {
+  Future<void> _loadMore() async {
     int currentPage = widget.pageController.page?.round() ?? 0;
 
     widget.showArrowCallback();
 
     if (currentPage == 0) {
-      await topRatedNextPage;
+      await ref.read( topRatedMoviesProvider.notifier ).loadNextPage();
     } else {
-      await popularNextPage;
+      await ref.read( popularMoviesProvider.notifier ).loadNextPage();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final topRatedNextPage = ref.read( topRatedMoviesProvider.notifier ).loadNextPage();
-    final popularNextPage = ref.read( popularMoviesProvider.notifier ).loadNextPage();
+
     final appTextTheme = Theme.of(context).textTheme;
     bool isPressed = false;
+    
     return InkWell(
       onTap: () async {
         setState(() => isPressed = true); 
-        await _loadMore( topRatedNextPage, popularNextPage );
+        await _loadMore();
         await Future.delayed(const Duration(milliseconds: 200));
         setState(() => isPressed = false); 
       },

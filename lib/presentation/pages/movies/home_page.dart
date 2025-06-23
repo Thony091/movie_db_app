@@ -27,12 +27,10 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
   @override
   void initState() {
     super.initState();
-    pageController = PageController(
-      keepPage: true
-    );
-    ref.read( popularMoviesProvider.notifier ).loadNextPage();
-    ref.read( topRatedMoviesProvider.notifier ).loadNextPage();
+    pageController = PageController( keepPage: true );
   }
+
+
 
   void _showArrow() {
     setState(() {
@@ -56,12 +54,14 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
   Widget build(BuildContext context) {
     super.build(context);
 
-    final movieSuggestions = ref.watch(movieSuggestionsProvider) ?? [];
+    final popularMovies     = ref.watch(popularMoviesProvider);
+    final topRatedMovies    = ref.watch(topRatedMoviesProvider);
+    final movieSuggestions  = ref.watch(movieSuggestionsProvider);
     final pageIndexNotifier = ref.watch(pageIndexHomeProvider.notifier);
-    final pageController = pageIndexNotifier.pageController;
+    final pageController    = pageIndexNotifier.pageController;
 
-    final appTextTheme = Theme.of(context).textTheme;
-    final appColorTheme = Theme.of(context).colorScheme;
+    final appTextTheme      = Theme.of(context).textTheme;
+    final appColorTheme     = Theme.of(context).colorScheme;
 
     return Scaffold(
       backgroundColor: appColorTheme.secondary,
@@ -91,8 +91,8 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
                                 pageIndexNotifier.changePage(index);
                               },
                               children: [
-                                MovieListView( moviesProvider: topRatedMoviesProvider ),
-                                MovieListView( moviesProvider: popularMoviesProvider ),
+                                MovieListView( moviesProvider: topRatedMovies ),
+                                MovieListView( moviesProvider: popularMovies ),
                               ],
                             ),
                               
@@ -161,7 +161,7 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10), 
                           minimumSize: const Size(150, 50),
                         ),
-                        onPressed: () => context.go('/favorite-page'),
+                        onPressed: () => context.push('/favorite-page'),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -197,7 +197,7 @@ class HomePageState extends ConsumerState<HomePage> with AutomaticKeepAliveClien
 
 class MovieListView extends ConsumerWidget {
 
-  final StateNotifierProvider<MoviesNotifier, List<Movie>> moviesProvider;
+  final List<Movie> moviesProvider;
 
   const MovieListView({
     super.key, 
@@ -206,14 +206,12 @@ class MovieListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
-    final movies = ref.watch( moviesProvider );
 
     return ListView.builder(
-      itemCount: movies.length,
+      itemCount: moviesProvider.length,
       itemBuilder: (context, index) {
         return MovieItem(
-          movie: movies[index]
+          movie: moviesProvider[index]
         );
       },
     );
@@ -230,7 +228,7 @@ class _CustomAppBarHome extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     
-    final movieSuggestions = ref.watch(movieSuggestionsProvider) ?? [];
+    final movieSuggestions = ref.watch(movieSuggestionsProvider) ;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

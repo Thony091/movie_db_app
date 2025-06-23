@@ -35,7 +35,7 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
     final movies = await ref.read(movieRepositoryProvider).searchMovies(query);
 
     // Actualiza el estado con las sugerencias encontradas
-    ref.read(movieSuggestionsProvider.notifier).state = movies ?? [];
+    ref.read(movieSuggestionsProvider.notifier).state = movies;
   }
 
   void _selectMovie(Movie movie) {
@@ -53,7 +53,8 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final movieSuggestions = ref.watch(movieSuggestionsProvider) ?? [];
+    
+    final movieSuggestions = ref.watch(movieSuggestionsProvider) ;
     final selectedMovie = ref.watch(searchedMovieProvider);
     final isButtonDisabled = selectedMovie == null;
 

@@ -1,0 +1,12 @@
+# build.yaml (Sintaxis más moderna y limpia)
+
+targets:
+  $default:
+    builders:
+      isar_generator:
+        generate_for:
+          - "lib/**.dart"
+      
+      mockito:
+        generate_for:
+          - "test/**.dart"

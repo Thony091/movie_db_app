@@ -1,19 +1,15 @@
 
 import 'package:dio/dio.dart';
 
-import '../../config/constants/environment.dart';
+// import '../../config/constants/environment.dart';
 import '../../domain/domain.dart';
 import '../infrastructure.dart';
 
 class MoviedbDatasourceImpl extends MoviesDatasource {
 
-  final dio = Dio(BaseOptions(
-    baseUrl: 'https://api.themoviedb.org/3',
-    queryParameters: {
-      'api_key': Environment.theMovieDbKey,
-      'language': 'en-US'
-    }
-  ));
+  final Dio dio;
+
+  MoviedbDatasourceImpl(this.dio);
 
   List<Movie> _jsonToMovies( Map<String,dynamic> json ) {
 

@@ -1,39 +1,15 @@
-
-
-
-
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../../domain/domain.dart';
 
 class IsarDatasource extends LocalStorageDatasource {
   
-  late Future<Isar> db;
-
-  IsarDatasource() {
-    db = openDB();
-  }
-
-  Future<Isar> openDB() async {
-
-    final dir = await getApplicationDocumentsDirectory();
-    
-    if ( Isar.instanceNames.isEmpty ) {
-      return await Isar.open(
-        [ MovieSchema ], 
-        inspector: true,
-        directory: dir.path,
-      );
-    }
-
-    return Future.value(Isar.getInstance());
-  }
-
-
+  late Isar db;
+  IsarDatasource(this.db);
+  
   @override
   Future<bool> isMovieFavorite(int movieId) async {
-    final isar = await db;
+    final isar =  db;
 
     final Movie? isFavoriteMovie = await isar.movies
       .filter()
@@ -46,7 +22,7 @@ class IsarDatasource extends LocalStorageDatasource {
   @override
   Future<void> toggleFavorite(Movie movie) async {
     
-    final isar = await db;
+    final isar =  db;
 
     final favoriteMovie = await isar.movies
       .filter()
@@ -67,7 +43,7 @@ class IsarDatasource extends LocalStorageDatasource {
   @override
   Future<List<Movie>> loadMovies({int limit = 10, offset = 0}) async {
     
-    final isar = await db;
+    final isar =  db;
 
     return isar.movies.where()
       .offset(offset)

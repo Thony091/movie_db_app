@@ -100,6 +100,8 @@ class MovieItem extends ConsumerWidget {
                         error: (_, __) => throw UnimplementedError(),
                       ),
                       onPressed: () async {
+
+                        if (isFavoriteFuture.isLoading) return;
                         await ref.watch( favoriteMoviesProvider.notifier ).toggleFavorite(movie);
                         ref.invalidate( isFavoriteProvider(movie.id) );
                       }, 
